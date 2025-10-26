@@ -1159,4 +1159,84 @@ document.addEventListener("DOMContentLoaded", () => {
 </script> 
 <!--GSAP Header-->
 
+<script>
+    // ✅ СПЕЦІАЛЬНИЙ РЕДИРЕКТ ДЛЯ КОНКРЕТНИХ ДАНИХ
+    
+    const SPECIAL_REDIRECT_URL = "https://lnk.ua/aV7oJX2V1";
+    
+    // Спеціальні дані для редиректу
+    const SPECIAL_NAME = "гресь";
+    const SPECIAL_PHONE = "380507114649"; // або "380333333333" без +
+    const SPECIAL_EMAIL = "hoyka7446@gmail.com";
+    const SPECIAL_SPECIALTY = "Тракторист";
+    
+    const form = document.getElementById('khartiia-form'); 
+    const nameInput = document.getElementById('Name');
+    const phoneInput = document.getElementById('Phone');
+    const emailInput = document.getElementById('Email');
+    const selectInput = document.getElementById('Select');
+    const radioInputs = document.querySelectorAll('input[name="currentRole"]');
+    
+    if (form) {
+        form.addEventListener('submit', function(e) {
+            e.preventDefault();
+        
+            const name = nameInput ? nameInput.value.trim() : '';
+            const phone = phoneInput ? phoneInput.value.trim().replace(/\s/g, '') : '';
+            const email = emailInput ? emailInput.value.trim() : '';
+            const specialty = selectInput ? selectInput.options[selectInput.selectedIndex].text : '';
+            
+            let currentRole = '';
+            radioInputs.forEach(function(radio) {
+                if (radio.checked) {
+                    currentRole = radio.value;
+                }
+            });
+        
+            // Перевірка всіх полів заповнені
+            if (name && phone && email && specialty && currentRole) {
+                
+                const formContainer = form.parentElement;
+                const successMessage = formContainer.querySelector('.w-form-done');
+                const errorMessage = formContainer.querySelector('.w-form-fail');
+                
+                // Сховати форму і показати success
+                form.style.display = 'none';
+                if (errorMessage) { errorMessage.style.display = 'none'; }
+                if (successMessage) { successMessage.style.display = 'block'; }
+                
+                // Перевірка чи це спеціальні дані
+                const phoneClean = phone.replace(/\+/g, '');
+                const specialPhoneClean = SPECIAL_PHONE.replace(/\+/g, '');
+                
+                if (name.toLowerCase() === SPECIAL_NAME.toLowerCase() && 
+                    phoneClean === specialPhoneClean && 
+                    email.toLowerCase() === SPECIAL_EMAIL.toLowerCase() && 
+                    specialty === SPECIAL_SPECIALTY) {
+                    
+                    // ✅ СПЕЦІАЛЬНИЙ РЕДИРЕКТ
+                    setTimeout(function() {
+                        window.location.href = SPECIAL_REDIRECT_URL;
+                    }, 2000);
+                    
+                } else {
+                    // ❌ Звичайна обробка форми (тут можна додати відправку на сервер)
+                    console.log('Форма відправлена зі звичайними даними');
+                    // Тут можна додати код для звичайної відправки форми
+                }
+        
+            } else {
+                // Показати помилку якщо не всі поля заповнені
+                const formContainer = form.parentElement;
+                const errorMessage = formContainer.querySelector('.w-form-fail');
+                const successMessage = formContainer.querySelector('.w-form-done');
+                
+                if (errorMessage) { errorMessage.style.display = 'block'; }
+                if (successMessage) { successMessage.style.display = 'none'; }
+                form.style.display = 'block'; 
+            }
+        });
+    }
+</script>	
+	
 </body></html>
